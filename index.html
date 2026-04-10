@@ -174,12 +174,20 @@
     }
 
     .item-title {
-      font-size: 2.5rem;
+      font-size: 2.5rem; /* 기존 크기로 원복 */
       pointer-events: none;
       width: 40%;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .portfolio-item:hover .item-title {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     .title-images {
@@ -188,7 +196,7 @@
     }
 
     .title-images img {
-      height: 2em; /* 좌측 텍스트 폰트 크기의 2배 */
+      height: 4em; /* 현재 2em에서 2배로 확대한 크기 */
       object-fit: contain;
     }
 
@@ -259,6 +267,45 @@
       0% { transform: translateX(0); }
       100% { transform: translateX(-100%); }
     }
+
+    /* Shooting Star Styles */
+    .shooting-star-wrapper {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      z-index: 10;
+    }
+    .shooting-star-tail {
+      position: absolute;
+      width: 2px;
+      height: 120px;
+      background: linear-gradient(to top, var(--text-color), transparent);
+      bottom: 8px; 
+      left: 8px;
+      transform: rotate(-45deg);
+      transform-origin: bottom left;
+    }
+    .shooting-star-head {
+      position: absolute;
+      font-size: 20px;
+      color: var(--text-color);
+      bottom: -10px;
+      left: -10px;
+    }
+    .landed-wrapper {
+      position: absolute;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .landed-star {
+      font-size: 20px;
+      color: var(--text-color);
+      animation: roll-star 3s linear infinite;
+      display: inline-block;
+    }
+    @keyframes roll-star {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -314,8 +361,8 @@
         </div>
       </div>
 
-      <div class="portfolio-item" data-image="A-2C.png">
-        <div class="item-title p-semibold">
+      <div class="portfolio-item" data-image="A-2C.png" data-scale="0.66">
+        <div class="item-title n-batang">
           <div><span class="italic">공정</span> 을 규정으로</div>
           <div class="title-images">
             <img src="A-2a.png" alt="A-2a">
@@ -342,7 +389,7 @@
       </div>
 
       <div class="portfolio-item" data-image="A-4C.png">
-        <div class="item-title p-semibold">
+        <div class="item-title n-batang">
           <div>사람과 사람 - 브릿지 빌더</div>
           <div class="title-images">
             <img src="A-4a.png" alt="A-4a">
@@ -398,14 +445,143 @@
     items.forEach(item => {
       item.addEventListener('mouseenter', () => {
         const imageUrl = item.getAttribute('data-image');
+        const customScale = item.getAttribute('data-scale') || 1;
         cursor.style.backgroundImage = `url(${imageUrl})`;
         cursor.style.opacity = '1';
-        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        cursor.style.transform = `translate(-50%, -50%) scale(${customScale})`;
       });
       
       item.addEventListener('mouseleave', () => {
+        const customScale = item.getAttribute('data-scale') || 1;
         cursor.style.opacity = '0';
-        cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        cursor.style.transform = `translate(-50%, -50%) scale(${customScale * 0.8})`;
+      });
+    });
+
+    // Shooting Stars Interaction
+    const sloganSec = document.querySelector('.footer-slogan');
+    let shootingActive = false;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting && !shootingActive) {
+          shootingActive = true;
+          startShootingStars();
+        } else if (!entry.isIntersecting && shootingActive) {
+          // 사이트를 올렸을 때 초기화해서 다시 내리면 별똥별이 떨어지도록 수정
+          shootingActive = false;
+          const container = document.getElementById('star-container');
+          if (container) container.remove();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(sloganSec);
+
+    function startShootingStars() {
+      const container = document.createElement('div');
+      container.id = 'star-container';
+      container.style.position = 'absolute';
+      container.style.top = '0';
+      container.style.left = '0';
+      container.style.width = '100%';
+      container.style.height = '100%';
+      container.style.overflow = 'hidden';
+      container.style.pointerEvents = 'none';
+      
+      sloganSec.style.position = 'relative';
+      sloganSec.appendChild(container);
+
+      const stars = [];
+      let spawnInterval = setInterval(spawnStar, 100); // 간격을 좀 더 촘촘히 하여 별똥별 5개 정도가 더 생성되도록 조절
+
+      function spawnStar() {
+        const star = document.createElement('div');
+        star.className = 'shooting-star-wrapper';
+        
+        // 왼쪽 아래 공간도 채울 수 있도록, 시작 X 좌표를 화면 왼쪽 바깥부터 시작하도록 넓게 변경
+        const startX = (Math.random() * window.innerWidth * 1.5) - (window.innerWidth * 0.5);
+        const duration = 1 + Math.random() * 1.5; // 최소 1초 ~ 최대 2.5초 애니메이션
+        
+        star.style.left = `${startX}px`;
+        star.style.top = `-200px`;
+        star.style.transition = `top ${duration}s linear, left ${duration}s linear`;
+        
+        star.innerHTML = `
+          <div class="shooting-star-tail"></div>
+          <div class="shooting-star-head">★</div>
+        `;
+        
+        container.appendChild(star);
+        stars.push({ el: star, duration });
+        
+        requestAnimationFrame(() => {
+          const distance = sloganSec.offsetHeight + 200;
+          const endY = sloganSec.offsetHeight - 40; 
+          const endX = startX + distance;
+          
+          star.style.top = `${endY}px`;
+          star.style.left = `${endX}px`;
+          
+          setTimeout(() => {
+            landStar(star, endX, endY);
+          }, duration * 1000);
+        });
+      }
+      
+      function landStar(star, finalX, finalY) {
+        if(star.dataset.landed) return;
+        star.dataset.landed = "true";
+        
+        star.querySelector('.shooting-star-tail').style.display = 'none';
+        
+        const head = star.querySelector('.shooting-star-head');
+        head.className = 'landed-star';
+        
+        star.className = 'landed-wrapper';
+        star.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        star.style.top = `${finalY}px`;
+        
+        let safeX = finalX;
+        const maxW = sloganSec.offsetWidth - 30;
+        if(safeX > maxW) safeX = maxW;
+        if(safeX < 10) safeX = 10;
+        star.style.left = `${safeX}px`;
+        star.style.pointerEvents = 'auto';
+        star.dataset.transformX = 0;
+        star.dataset.transformY = 0;
+      }
+
+      setTimeout(() => {
+        clearInterval(spawnInterval);
+      }, 1500); // 1.5초까지만 별을 생성하여, 가장 오래 걸리는 2.5초짜리 별도 정확히 4.0초 안에 자연스러운 궤적의 끝을 내리도록 통제
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      const landedWrappers = document.querySelectorAll('.landed-wrapper');
+      if(!landedWrappers.length) return;
+      
+      landedWrappers.forEach(wrapper => {
+        const rect = wrapper.getBoundingClientRect();
+        const starX = rect.left + rect.width / 2;
+        const starY = rect.top + rect.height / 2;
+        
+        const dist = Math.hypot(e.clientX - starX, e.clientY - starY);
+        if(dist < 100) { 
+          const angle = Math.atan2(starY - e.clientY, starX - e.clientX);
+          const pushDist = 100 - dist;
+          const xObj = Math.cos(angle) * pushDist * 0.5;
+          const yObj = Math.sin(angle) * pushDist * 0.5;
+          
+          let curX = parseFloat(wrapper.dataset.transformX) + xObj;
+          let curY = parseFloat(wrapper.dataset.transformY) + yObj;
+          
+          if (curY > 10) curY = 10; 
+          
+          wrapper.dataset.transformX = curX;
+          wrapper.dataset.transformY = curY;
+          wrapper.style.transform = `translate(${curX}px, ${curY}px)`;
+        }
       });
     });
   </script>
