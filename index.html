@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GLOBAL LEADER, 심영채</title>
+  
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #133823; /* 요청하신 다크 그린/블랙 계열 색상 */
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Pretendard', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Typography Utilities */
+    .n-batang { font-family: 'Nanum Myeongjo', '나눔바탕', serif; font-weight: 400; }
+    .p-light { font-weight: 300; }
+    .p-regular { font-weight: 400; }
+    .p-semibold { font-weight: 600; }
+    .p-bold { font-weight: 700; }
+    .p-extrabold { font-weight: 800; }
+    .uppercase { text-transform: uppercase; }
+    .italic { font-style: italic; }
+
+    /* Layout & Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2.5rem 4rem;
+      font-size: 1.2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 15rem 4rem;
+      font-size: 2.8rem;
+      line-height: 1.4;
+      text-align: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .hero-line {
+      display: block;
+      width: 100%;
+      text-align: justify;
+      text-align-last: justify;
+    }
+
+    /* Portfolio Section */
+    .portfolio {
+      padding: 4rem;
+      border-top: 1px solid var(--text-color);
+    }
+    
+    .portfolio h2 {
+      font-size: 1.5rem;
+      margin-bottom: 4rem;
+    }
+    
+    .portfolio-list {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .portfolio-item {
+      padding: 3rem 0;
+      border-bottom: 1px solid rgba(19, 56, 35, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      cursor: none; /* 기본 커서 숨김 */
+      transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      min-height: 250px;
+      box-sizing: border-box;
+    }
+    
+    .portfolio-item:hover {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .item-title {
+      font-size: 2.5rem;
+      pointer-events: none;
+      width: 40%;
+    }
+
+    .item-details {
+      width: 60%;
+      text-align: right;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    /* 호버 시 우측 텍스트 등장 */
+    .portfolio-item:hover .item-details {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Custom Cursor */
+    #custom-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 400px;
+      height: 400px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 9999;
+      mix-blend-mode: multiply; /* 배경과 자연스럽게 섞이도록 처리 */
+    }
+
+    /* Slogan Section */
+    .footer-slogan {
+      padding: 10rem 4rem;
+      text-align: center;
+      font-size: 2.2rem;
+      line-height: 1.6;
+    }
+
+    /* Marquee Area */
+    .marquee-container {
+      width: 100vw;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 3rem 0;
+      border-top: 1px solid var(--text-color);
+      display: flex;
+    }
+
+    .marquee-content {
+      display: flex;
+      animation: scroll 15s linear infinite;
+    }
+
+    .marquee-content span {
+      font-size: 2rem;
+      margin-right: 3rem;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="custom-cursor"></div>
+
+  <header>
+    <div class="n-batang">SPEC</div>
+    <div class="p-regular">GLOBAL LEADER, 심영채 -</div>
+  </header>
+
+  <section class="hero uppercase">
+    <div class="hero-line">
+      <span class="p-bold">STEADY, UNSHAKABLE ENERGY</span>
+    </div>
+    <div class="hero-line">
+      <span class="n-batang">— WHERE </span> 
+      <span class="p-extrabold">DILIGENCE</span> 
+      <span class="n-batang"> SPEAKS THROUGH </span> 
+      <span class="p-light">RESULTS &</span>
+    </div>
+    <div class="hero-line">
+      <span class="p-bold">AN OPEN, FLEXIBLE MINDSET</span>
+    </div>
+    <div class="hero-line">
+      <span class="n-batang">— WHERE </span> 
+      <span class="p-extrabold">STRONG RELATIONSHIPS</span> 
+      <span class="n-batang"> COME TO LIFE.</span>
+    </div>
+  </section>
+
+  <section class="portfolio">
+    <h2 class="p-semibold uppercase">PORTFOLIO</h2>
+    <div class="portfolio-list">
+      
+      <div class="portfolio-item" data-image="A-1C.png">
+        <div class="item-title n-batang">숫자로 증명하는 <span class="italic">성실함</span></div>
+        <div class="item-details p-light">
+          학점 평점 4.4<br>
+          대학생연합발표동아리 MVP 수료<br>
+          대학생연합발표동아리 최다 우승자<br>
+          전국 대학생 연합 프리젠테이션 동아리 대표, 청중상 수상
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-image="A-2C.png">
+        <div class="item-title p-semibold"><span class="italic">공정</span> 을 규정으로</div>
+        <div class="item-details p-light">
+          법무법인 해율 산하 청소년 봉사단 은평본부 규율 개설<br>
+          전국 대학생 연합 프리젠테이션 동아리 참여 규정 일원화
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-image="A-3C.png">
+        <div class="item-title n-batang">흔들리지 않는 체력</div>
+        <div class="item-details p-light">
+          주3회 이상의 헬스광<br>
+          중고교 누적 211시간 봉사
+        </div>
+      </div>
+
+      <div class="portfolio-item" data-image="A-4C.png">
+        <div class="item-title p-semibold">사람과 사람 - 브릿지 빌더</div>
+        <div class="item-details p-light">
+          글로벌리더학부 학생회 끌림 대외협력국<br>
+          글로벌리더학부 글로벌융합학부 융합 학술제 개최<br>
+          4개대학 연합 법학포럼 개최 예정
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="footer-slogan uppercase n-batang">
+    TOWARD A GREATER FUTURE — WHERE WE RISE TOGETHER,<br>DRIVEN BY VISION, CONNECTION, AND GROWTH.
+  </section>
+
+  <div class="marquee-container">
+    <div class="marquee-content">
+      <span class="p-light">GLOBAL LEADER 심영채</span>
+      <span class="n-batang">GLOBAL LEADER 심영채</span>
+      <span class="p-semibold">GLOBAL LEADER 심영채</span>
+    </div>
+    <div class="marquee-content">
+      <span class="p-light">GLOBAL LEADER 심영채</span>
+      <span class="n-batang">GLOBAL LEADER 심영채</span>
+      <span class="p-semibold">GLOBAL LEADER 심영채</span>
+    </div>
+    <div class="marquee-content">
+      <span class="p-light">GLOBAL LEADER 심영채</span>
+      <span class="n-batang">GLOBAL LEADER 심영채</span>
+      <span class="p-semibold">GLOBAL LEADER 심영채</span>
+    </div>
+  </div>
+
+  <script>
+    const cursor = document.getElementById('custom-cursor');
+    const items = document.querySelectorAll('.portfolio-item');
+    let cursorX = 0, cursorY = 0;
+
+    // 마우스 커서 위치 부드럽게 추적
+    document.addEventListener('mousemove', (e) => {
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+    });
+
+    // 구역 진입/이탈 시 로직
+    items.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        const imageUrl = item.getAttribute('data-image');
+        cursor.style.backgroundImage = `url(${imageUrl})`;
+        cursor.style.opacity = '1';
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      });
+      
+      item.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+        cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+      });
+    });
+  </script>
+</body>
+</html>
