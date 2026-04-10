@@ -59,6 +59,86 @@
       text-align-last: justify;
     }
 
+    /* Hero Interactive Effects */
+    .hover-steady, .hover-energy, .hover-open, .hover-flexible,
+    .hover-unshakable, .hover-speaks, .hover-strong, .hover-relationship {
+      display: inline-block;
+    }
+    
+    .hover-steady {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hover-steady:hover {
+      transform: translateY(-15px);
+    }
+
+    .hover-energy {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-origin: center;
+    }
+    .hover-energy:hover {
+      transform: scale(2);
+    }
+
+    .open-left {
+      display: inline-block;
+      transition: margin-right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hover-open:hover .open-left {
+      margin-right: 1.5rem;
+    }
+
+    .hover-flexible span {
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    .hover-flexible:hover span {
+      animation: flexible-wave 0.4s ease-in-out infinite;
+      animation-delay: calc(0.05s * var(--i));
+    }
+    @keyframes flexible-wave {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-15px) scale(1.2) rotate(5deg); }
+    }
+
+    .hover-unshakable {
+      transition: transform 0.1s ease;
+    }
+    @keyframes shaken-compressed {
+      0% { transform: scaleX(0.8) scaleY(0.8) translate(0, 0); }
+      25% { transform: scaleX(0.8) scaleY(0.8) translate(-5px, 5px); }
+      50% { transform: scaleX(0.8) scaleY(0.8) translate(5px, -5px); }
+      75% { transform: scaleX(0.8) scaleY(0.8) translate(-5px, -5px); }
+      100% { transform: scaleX(0.8) scaleY(0.8) translate(5px, 5px); }
+    }
+    .hover-unshakable:hover {
+      animation: shaken-compressed 0.2s infinite;
+    }
+
+    .hover-speaks {
+      transition: text-shadow 0.3s ease;
+    }
+    .hover-speaks:hover {
+      text-shadow: 0 0 10px var(--text-color), 0 0 20px var(--text-color);
+    }
+
+    .hover-strong {
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .hover-strong:hover {
+      transform: scale(2.5) rotate(-15deg);
+      letter-spacing: 1rem;
+    }
+
+    .hover-relationship {
+      transition: all 0.3s ease;
+      -webkit-text-stroke: 0px transparent;
+    }
+    .hover-relationship:hover {
+      color: var(--bg-color);
+      -webkit-text-stroke: 2px var(--text-color);
+    }
+
     /* Portfolio Section */
     .portfolio {
       padding: 4rem;
@@ -97,6 +177,19 @@
       font-size: 2.5rem;
       pointer-events: none;
       width: 40%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .title-images {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .title-images img {
+      height: 2em; /* 좌측 텍스트 폰트 크기의 2배 */
+      object-fit: contain;
     }
 
     .item-details {
@@ -179,20 +272,25 @@
 
   <section class="hero uppercase">
     <div class="hero-line">
-      <span class="p-bold">STEADY, UNSHAKABLE ENERGY</span>
+      <span class="p-bold">
+        <span class="hover-steady">STEADY</span>, <span class="hover-unshakable">UNSHAKABLE</span> <span class="hover-energy">ENERGY</span>
+      </span>
     </div>
     <div class="hero-line">
       <span class="n-batang">— WHERE </span> 
       <span class="p-extrabold">DILIGENCE</span> 
-      <span class="n-batang"> SPEAKS THROUGH </span> 
+      <span class="n-batang"> <span class="hover-speaks">SPEAKS</span> THROUGH </span> 
       <span class="p-light">RESULTS &</span>
     </div>
     <div class="hero-line">
-      <span class="p-bold">AN OPEN, FLEXIBLE MINDSET</span>
+      <span class="p-bold">
+        AN <span class="hover-open"><span class="open-left">OP</span>EN</span>, 
+        <span class="hover-flexible"><span style="--i:1">F</span><span style="--i:2">L</span><span style="--i:3">E</span><span style="--i:4">X</span><span style="--i:5">I</span><span style="--i:6">B</span><span style="--i:7">L</span><span style="--i:8">E</span></span> MINDSET
+      </span>
     </div>
     <div class="hero-line">
       <span class="n-batang">— WHERE </span> 
-      <span class="p-extrabold">STRONG RELATIONSHIPS</span> 
+      <span class="p-extrabold"><span class="hover-strong">STRONG</span> <span class="hover-relationship">RELATIONSHIPS</span></span> 
       <span class="n-batang"> COME TO LIFE.</span>
     </div>
   </section>
@@ -202,7 +300,12 @@
     <div class="portfolio-list">
       
       <div class="portfolio-item" data-image="A-1C.png">
-        <div class="item-title n-batang">숫자로 증명하는 <span class="italic">성실함</span></div>
+        <div class="item-title n-batang">
+          <div>숫자로 증명하는 <span class="italic">성실함</span></div>
+          <div class="title-images">
+            <img src="A-1a.png" alt="A-1a">
+          </div>
+        </div>
         <div class="item-details p-light">
           학점 평점 4.4<br>
           대학생연합발표동아리 MVP 수료<br>
@@ -212,7 +315,13 @@
       </div>
 
       <div class="portfolio-item" data-image="A-2C.png">
-        <div class="item-title p-semibold"><span class="italic">공정</span> 을 규정으로</div>
+        <div class="item-title p-semibold">
+          <div><span class="italic">공정</span> 을 규정으로</div>
+          <div class="title-images">
+            <img src="A-2a.png" alt="A-2a">
+            <img src="A-2b.png" alt="A-2b">
+          </div>
+        </div>
         <div class="item-details p-light">
           법무법인 해율 산하 청소년 봉사단 은평본부 규율 개설<br>
           전국 대학생 연합 프리젠테이션 동아리 참여 규정 일원화
@@ -220,7 +329,12 @@
       </div>
 
       <div class="portfolio-item" data-image="A-3C.png">
-        <div class="item-title n-batang">흔들리지 않는 체력</div>
+        <div class="item-title n-batang">
+          <div>흔들리지 않는 체력</div>
+          <div class="title-images">
+            <img src="A-3a.png" alt="A-3a">
+          </div>
+        </div>
         <div class="item-details p-light">
           주3회 이상의 헬스광<br>
           중고교 누적 211시간 봉사
@@ -228,7 +342,13 @@
       </div>
 
       <div class="portfolio-item" data-image="A-4C.png">
-        <div class="item-title p-semibold">사람과 사람 - 브릿지 빌더</div>
+        <div class="item-title p-semibold">
+          <div>사람과 사람 - 브릿지 빌더</div>
+          <div class="title-images">
+            <img src="A-4a.png" alt="A-4a">
+            <img src="A-4b.png" alt="A-4b">
+          </div>
+        </div>
         <div class="item-details p-light">
           글로벌리더학부 학생회 끌림 대외협력국<br>
           글로벌리더학부 글로벌융합학부 융합 학술제 개최<br>
